@@ -8,7 +8,7 @@ import { ProverbCard } from './components/ProverbCard';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorAlert } from './components/ErrorAlert';
 import {VoiceWarning} from "./components/VoiceWarning.tsx";
-import {VoiceHelpModal} from "./components/VoiceHelpModal.tsx"; // ErrorAlert kann weiterhin für API-Fehler verwendet werden
+import {VoiceHelpModal} from "./components/VoiceHelpModal.tsx";
 
 const App: React.FC = () => {
     const [proverb, setProverb] = useState<Proverb | null>(null);
@@ -35,7 +35,7 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getProverb();
+        getProverb().then();
     }, [getProverb]);
 
     return (
@@ -44,11 +44,11 @@ const App: React.FC = () => {
 
                 {loading && <LoadingSpinner />}
 
-                {error && <ErrorAlert message={error} />} {/* Dies ist für API-Fehler */}
+                {error && <ErrorAlert message={error} />}
 
                 {!loading && !error && !proverb && (
                     <p className="text-center text-base-content">
-                        Konnte kein Sprichwort laden. Versuche es erneut!
+                        Could not load a proverb. Try again!
                     </p>
                 )}
 
@@ -78,7 +78,7 @@ const App: React.FC = () => {
             {voiceWarning && (
                 <VoiceWarning
                     message={voiceWarning}
-                    modalId="voice-help-modal" // Die ID des Modals, das geöffnet werden soll
+                    modalId="voice-help-modal"
                 />
             )}
         </div>
